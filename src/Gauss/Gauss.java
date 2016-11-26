@@ -9,11 +9,12 @@ public class Gauss {
     public static double[] vectorSolucion;
     public static double determinante;
 
-    public static void jordan(double[][] matriz) {
+    public static void jordan(Matriz MATRIZ) {
 
         int pivote = 0; //Columna Actual que se manipula. n-1 espacios por cada iteracion
-        int FILAS = matriz.length;
-        int COLUMNAS = matriz[0].length;
+        int FILAS = MATRIZ.getRows();
+        int COLUMNAS = MATRIZ.getCols();
+        double[][] matriz = MATRIZ.getMATRIX();
 
 
         vectorSolucion = new double[FILAS];
@@ -106,7 +107,7 @@ public class Gauss {
 
         //Intercambio de renglones en b
         //Todo: implementar el vector b correctamente
-            imprimir(matriz);
+            Output.imprimirMatriz(matriz);
             double aux = vectorSolucion[Ri];
             vectorSolucion[Ri] = vectorSolucion[Rj];
             vectorSolucion[Rj] = aux;
@@ -136,27 +137,6 @@ public class Gauss {
         Output.imprimirMatriz(matriz);
     }
 
-    static public void imprimir(double[][] matriz) {
-        int i = 0;
-        for (int columna1 = 0; columna1 < matriz.length; columna1++) {
-            System.out.print("[ ");
-
-            for (int columna2 = 0; columna2 < matriz[0].length - 1; columna2++) {
-                if(matriz[columna1][columna2+1] >= 0)
-                    System.out.print(matriz[columna1][columna2] + ",\t ");
-                else
-                    System.out.print(matriz[columna1][columna2] + ",\t");
-            }
-
-            System.out.print(matriz[columna1][matriz[columna1].length - 1] + "\t]");
-            if(vectorSolucion != null) {
-                System.out.println("\t[" + vectorSolucion[i] + "\t]");
-                i++;
-            }else{
-                System.out.println("");
-            }
-        }
-    }
     public static void elimination(double[][] matriz) {
 
         int pivote = 0; //Columna Actual que se manipula. n-1 espacios por cada iteracion

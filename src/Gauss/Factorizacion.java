@@ -2,8 +2,6 @@ package Gauss;
 
 import Listas.Stack;
 
-import static java.util.stream.IntStream.range;
-
 /**
  * Created by Julian on 14/10/2016.
  */
@@ -11,6 +9,7 @@ public class Factorizacion {
     public static int FILAS;
     public static int COLUMNAS;
     private static double[][] identidad;
+    private static TriangularInferior L;
 
     //vector b en Ax = b. Escrito directo, en necesidad de interfaz
     public static double[] vectorSolucion;
@@ -28,12 +27,9 @@ public class Factorizacion {
 
 
     public static double[][][] escalonar(Matriz MATRIZ) {
-        //se saca el arreglo matriz del objeto
-        double[][] matriz = MATRIZ.getMATRIX();
-
         //se saca el tamaño de la matriz
-        FILAS = matriz.length;
-        COLUMNAS = matriz[0].length;
+        FILAS = MATRIZ.getRows();
+        COLUMNAS = MATRIZ.getCols();
 
         //se saca su identidad
         identidad = MATRIZ.getIDENTIDAD();
@@ -48,10 +44,9 @@ public class Factorizacion {
         luNumber = 1;
 
     //se declaran o derivan las matrices de factorizacion
+        double[][] matriz = MATRIZ.getMATRIX();
         double[][] P = permutar(matriz,identidad);
-        double[][] A = matriz;
-        double[][] L = new double[FILAS][FILAS];
-        double[][] U = new double[FILAS][FILAS];
+
 
         PALU = new double[][][]{P,matriz,};
         matriz = Operacion.multiplicacion(P,matriz);
@@ -131,10 +126,10 @@ public class Factorizacion {
         System.out.println("\u001B[36m"+"Determinante = "+determinante+"\u001B[0m");
 
         //llama al algoritmo de L
-        L = TriangularInferior.overloadProcessors(pila);
+        L = new TriangularInferior(pila, FILAS);
 
         //FORMA FINAL
-        PALU = new double[][][]{P,A,L,matriz};
+        PALU = new double[][][]{P,MATRIZ.getMATRIX(),L.getMatrix(),matriz};
         //PALU PRINT
         System.out.println("");
         for(int i = 0; i < 4; i++) {

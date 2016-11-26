@@ -52,4 +52,12 @@ public class Matriz {
     public double[][] getIDENTIDAD() {
         return IDENTIDAD;
     }
+
+    public int getRows(){
+        return MATRIX.length;
+    }
+
+    public int getCols(){
+        return MATRIX[0].length;
+    }
 }

@@ -9,8 +9,12 @@ import static java.util.stream.IntStream.range;
  * Created by Julian on 21/11/2016.
  */
 public class TriangularInferior {
-    private static double[][] Lmatrix;
-    static Cola colaInversas;
+    private double[][] Lmatrix;
+    private Cola colaInversas;
+
+    public TriangularInferior(Stack pila, int n) {
+        overloadProcessors(pila, n);
+    }
 
     //esta funcion recibe dos valores que representan una matriz de escalonar
     //donde el numero representa n en e_n
@@ -24,12 +28,12 @@ public class TriangularInferior {
     // e11...........
     //
     //el numero "lunumber" es el numero de e que se envia
-    private static void checkTuple(int numero, double valor) {
+    private void checkTuple(int numero, double valor, int filas) {
 
         int i = 0;
         int j = 0;
     //System.out.println(numero + "valor: " + valor);
-        double[][] EMatrix = range(0, Factorizacion.FILAS).mapToObj(u -> range(0, Factorizacion.FILAS)
+        double[][] EMatrix = range(0, filas).mapToObj(u -> range(0, filas)
                 .mapToDouble(v -> v == u ? 1 : 0).toArray())
                 .toArray(double[][]::new);
     //System.out.println(numero);
@@ -76,22 +80,21 @@ public class TriangularInferior {
 
     //en algun momento freia intellij
     //comienza el algoritmo de derivacion de L desde En
-    public static double[][] overloadProcessors(Stack pila) {
+    public void overloadProcessors(Stack pila, int n) {
         colaInversas = new Cola();
         System.out.println("\nAhora se deriva "+"\u001B[33m"+"L"+"\u001B[0m"
                 +" desde las matrices de escalonar inversas "+"\u001B[33m"+"Ln"+"\u001B[0m"+":");
         while (!pila.isEmpty()) {
             //manda los 2 valores clave en forma de tupla, para que sean procesados
-            checkTuple((int) pila.pop(), (double) pila.pop());
+            checkTuple((int) pila.pop(), (double) pila.pop(), n);
         }
 
         //inicia la multiplicacion de elementales recursiva
         //todo cambiar la multiplicacion recursiva por insercion secuencial
         clusterMultiplication(colaInversas, (double[][]) colaInversas.dequeue());
-        return Lmatrix;
     }
 
-    public static void clusterMultiplication(Cola cola, double[][] matriz){
+    public void clusterMultiplication(Cola cola, double[][] matriz){
         //multiplicacion de L recursiva
         //drena la cola hasta llegar al ultimo valor (solo faltaria la ultima multiplicacion)
         if(cola.size()>1){
@@ -105,5 +108,9 @@ public class TriangularInferior {
             Output.imprimirMatriz(L);
             Lmatrix = L;
         }
+    }
+
+    public double[][] getMatrix() {
+        return Lmatrix;
     }
 }
