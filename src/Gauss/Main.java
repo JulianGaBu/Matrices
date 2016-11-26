@@ -77,12 +77,13 @@ public class Main {
         ass.enqueue(0);
         ass.enqueue(1);
         ass.enqueue(2);
-        Output.imprimirMatriz(matrixGerry);
+        Matriz matriz = new Matriz(b);
+        //Output.imprimirMatriz(matrixGerry);
         //Gauss.elimination(a);
         System.out.println("REALIZANDO ELIMINACION");
         //Gauss.jordan(b);
         //Gauss.jordan(tester);
-        Factorizacion.escalonar(matrixGerry);
+        Factorizacion.escalonar(matriz);
 
 
 

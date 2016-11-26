@@ -7,8 +7,8 @@ import static java.util.stream.IntStream.range;
  */
 public class Matriz {
     private double[][] MATRIX;
-    private double[][][] PALU;
     public double[][] IDENTIDAD;
+    private double[][][] PALU;
 
     //Matriz cuadrada
     public Matriz(int n){
@@ -24,8 +24,12 @@ public class Matriz {
     }
 
     //Transferencia de matriz
+    //Crea identidad. Solo sirve con cuadradas?
     public Matriz(double[][] matriz){
         this.MATRIX = matriz;
+        this.IDENTIDAD = range(0, matriz.length).mapToObj(j -> range(0, matriz.length)
+                .mapToDouble(i -> i == j ? 1 : 0).toArray())
+                .toArray(double[][]::new);
     }
 
     //PALU MFCKR
@@ -39,5 +43,13 @@ public class Matriz {
 
     public double[][][] getPALU() {
         return PALU;
+    }
+
+    public void setPALU(double[][][] PALU) {
+        this.PALU = PALU;
+    }
+
+    public double[][] getIDENTIDAD() {
+        return IDENTIDAD;
     }
 }
