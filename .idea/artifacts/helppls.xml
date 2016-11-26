@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="helppls">
+    <output-path>$PROJECT_DIR$/out/artifacts/helppls</output-path>
+    <root id="archive" name="noInterface.jar" />
+  </artifact>
+</component>

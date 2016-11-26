@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Class-Path: C:\Users\Julian\Documents\IntelliJProjects\EcuacionesLinea
+ les\src
+Main-Class: C:\Users\Julian\Documents\IntelliJProjects\EcuacionesLinea
+ les\src\Gauss\main.java
+
