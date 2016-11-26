@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Gauss {
     public static double[] vectorSolucion;
+    public static double determinante;
 
     public static void jordan(double[][] matriz) {
 
@@ -59,7 +60,6 @@ public class Gauss {
                 //Si algun espacio era 0, la matriz intercambia los renglones para poder escalonar
 //                intercambiarRenglones(matriz, renglon, fila);
                 //intercambia la fila_i con la fila_j
-
                 if(fila != renglon)
                     intercambiarRenglones(matriz, renglon, fila);
 
@@ -106,27 +106,10 @@ public class Gauss {
 
         //Intercambio de renglones en b
         //Todo: implementar el vector b correctamente
-        if(Ri != Rj) {
             imprimir(matriz);
             double aux = vectorSolucion[Ri];
             vectorSolucion[Ri] = vectorSolucion[Rj];
             vectorSolucion[Rj] = aux;
-            imprimir(matriz);
-        }
-/*
-        //MATRICES DE ELIMINACION
-        //genera la matriz de escalonar a partir de la identidad
-        double[][] step = Sustitucion.generarIdentidad(matriz.length,matriz[0].length);
-        for (int columna1 = 0; columna1 < step[0].length; columna1++) {
-            double aux = step[Ri][columna1];
-            step[Ri][columna1] = step[Rj][columna1];
-            step[Rj][columna1] = aux;
-
-            System.out.println("STEP Columna "+columna1+" - Renglon "+Ri+" -a- Renglon "+Rj);
-        }
-        //...y la guarda en el arraylist
-        pasos.add(step);
-        */
     }
 
     static void multiplicarRenglones(double[][] matriz, int Ri, double lambda) {
@@ -138,15 +121,8 @@ public class Gauss {
             matriz[Ri][columna1] *= lambda;
         if(lambda!=1) {
             vectorSolucion[Ri] = (vectorSolucion[Ri]*lambda);
-            imprimir(matriz);
+            Output.imprimirMatriz(matriz);
         }
-        /*
-        //MATRICES DE ELIMINACION
-        //genera la matriz de escalonar a partir de la identidad
-        double[][] step = Sustitucion.generarIdentidad(matriz.length,matriz[0].length);
-        step[Ri][Ri] *= lambda;
-        pasos.add(step);
-        */
     }
 
     static void sumarRenglones(double[][] matriz, double lambda, int Rj, int Ri) {
@@ -157,15 +133,7 @@ public class Gauss {
         for (int columna1 = 0; columna1 < matriz[0].length; columna1++)
             matriz[Ri][columna1] -= lambda * matriz[Rj][columna1];
         vectorSolucion[Ri] = vectorSolucion[Ri]-(lambda*vectorSolucion[Rj]);
-        imprimir(matriz);
-        /*
-        //MATRICES DE ELIMINACION
-        //genera la matriz de escalonar a partir de la identidad
-        double[][] step = Sustitucion.generarIdentidad(matriz.length,matriz[0].length);
-        for (int columna1 = 0; columna1 < step[0].length; columna1++)
-            step[Ri][columna1] -= lambda * step[Rj][columna1];
-        pasos.add(step);
-        */
+        Output.imprimirMatriz(matriz);
     }
 
     static public void imprimir(double[][] matriz) {
@@ -244,6 +212,16 @@ public class Gauss {
                 }
             }
         }
+        //saca la determinante. Multiplica las diagonales
+        determinante = 1;
+        for(int i = 0; i < matriz.length; i++){
+            for(int j = 0; j< matriz[0].length; j++){
+                if(i == j){
+                    determinante *= matriz[i][j];
+                }
+            }
+        }
+
     }
     //intercambia ri con rj
 }

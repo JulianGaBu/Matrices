@@ -186,7 +186,6 @@ public class Factorizacion {
         double aux = vectorSolucion[Ri];
         vectorSolucion[Ri] = vectorSolucion[Rj];
         vectorSolucion[Rj] = aux;
-        Output.imprimirMatriz(matriz);
 
         //MATRICES DE ELIMINACION
         /*
