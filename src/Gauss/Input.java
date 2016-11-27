@@ -1,10 +1,5 @@
 package Gauss;
 
-import Listas.Cola;
-
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-
 import static java.util.Arrays.stream;
 
 /**
@@ -18,96 +13,9 @@ public class Input {
 
     public Input(String variables, String sistema){
         this.variables(variables);
-        this.parser2(sistema);
+        this.parseSystem(sistema);
     }
 
-    public void parser(String string){
-        //AtomicInteger columnas = new AtomicInteger(0);
-        //se va a dejar de usar, pero lo dejo como nota para terminar implementacion en el futuro
-        //se deberia contar el numero de variables con el AtomicInteger
-        int filas;
-        Cola colaVectorB = new Cola();
-        Cola colaVectorX = new Cola();
-        Cola elementos = new Cola();
-        ArrayList<String> matrix = new ArrayList<>();
-
-        //se divide cada linea del arreglo
-        String[] lineas = string.split("\\n");
-        System.out.println(string);
-        System.out.println("PROBANDO DECONSTRUCCION");
-
-        //se obtienen las filas y se instancia la matriz
-        filas = lineas.length;
-        matriz = new double[filas][columnas];
-
-        stream(lineas).forEach(l -> {
-            System.out.println(l);
-            String[] ecuaciones = l.split("(\\h?)[=](\\h?)");
-            //ecuacion[0] = sum(a_n X)  (parte izquierda)
-            //ecuacion[1] = b_n         (parte derecha)
-
-            colaVectorB.enqueue(ecuaciones[1]); //agrega la solucion a la cola de b
-
-            String[] terminos = ecuaciones[0].split("(\\h?)[+-](\\h?)");
-
-            //obtiene el numero de columas mayor para obtener m
-            if(columnas < terminos.length) {
-                columnas = terminos.length;
-            }
-
-            //ya divididos en ax de ax + by
-            //(coeficiente variable)
-            stream(terminos).forEach(t -> {
-                System.out.println(t);
-                String[] coeficientes = t.split("(?=[a-zA-Z])");
-                //coeficientes[0] = coeficiente
-                //coeficientes[1] = variable
-
-                //checa si se repite el vector en la cola
-                for(int i = 0; i < columnas; i++){
-                    //si la variable en la ecuacion esta en la lista de variables
-                    if(coeficientes[1] == vectorX[i]){
-                        break;
-                    }else if (i == columnas-1){
-        //error de input
-                        throw new InputMismatchException();
-                    }
-                }
-
-                //checa que haya coeficiente. Si no hay, manda un 1
-                if(coeficientes.length>1)
-                    elementos.enqueue(Double.parseDouble(coeficientes[0]));
-                else
-                    elementos.enqueue(1.0);
-
-            });
-
-            //System.out.println(colaVectorB.dequeue());
-        });
-
-        //crea la matriz
-        double[][] matriz = new double[filas][columnas];
-        for(int i = 0; i < filas; i++){
-            for(int j = 0; j < columnas; j++){
-                matriz[i][j] = (double)elementos.dequeue();
-            }
-        }
-
-        //crea el vector solucion
-        double[] vectorSolucion = new double[colaVectorB.size()];
-        int i = 0;
-        System.out.println(colaVectorB.size());
-        while(!colaVectorB.isEmpty()){
-            vectorSolucion[i] = Double.parseDouble((String)colaVectorB.dequeue());
-            i++;
-        }
-
-        //crea el vector x
-
-        Output.imprimirMatriz(matriz);
-        Output.imprimirSistema(matriz,vectorSolucion);
-
-    }
 
     public void variables(String lista){
         //todo aceptar variables sin lista previa
@@ -116,7 +24,95 @@ public class Input {
         System.out.println(columnas);
     }
 
-    public void parser2(String string){
+    public void parseCommands(String string){
+        //La estructura de los comandos sera simple.
+        //El arbol de opciones no puede tener más de 3 niveles
+        //Los separadores seran espacios SIEMPRE. usar esto para parsear
+        //
+        //  HELP
+        //  ->Print Help
+        //
+        //  NEW
+        // |    "MATRIX"
+        // |      ->A
+        // |            N
+        // |            N M
+        // |            N
+        // |                M   //(unica excepcion xq la vida es dura)
+        // |      ::INPUT
+        // |
+        // |    "SYSTEM"
+        // |        VARS
+        // |        ::INPUT
+        // |
+        // ->new Matriz(N,M,MATRIX::INPUT)
+        // :>Input.parseSystem(VARS,INPUT)
+        //
+        //  GET
+        // |    DET
+        // |        ->"A"
+        // |        ::INPUT
+        // |    SPACE +
+        // |      +>
+        // |        BASE *
+        // |        NULL *
+        // |        ROW  *
+        // |        COL  *
+        // |          *>
+        // |            ->"A"
+        // |            ::INPUT
+        // |
+        // ->Gauss.getDet(A|::)
+        // ->Espacios.get(+,*)
+        //    todo: ^^^^
+        //
+        //  GAUSS
+        // |    ->"A"
+        // |    ::INPUT
+        // |>JORDAN
+        // |    ->"A"
+        // |    ::INPUT
+        // |
+        // ->Gauss.Escalonar(A|::INPUT)
+        // ->Gauss.Jordan(A|::INPUT)
+        //
+        //  FACTORIZAR
+        // |    ->A
+        // |    ::MATRIX
+        // |
+        // -> Factorizacion.PALU(A)
+        // :> Factorizacion.PALU(MATRIX::INPUT)
+        //
+        // |MULTIPLICAR
+        // |    AB
+        // |    A B
+        // |    AXB
+        // |    ::MATRIX
+        // |        ::MATRIX    TODO: PERMITIR ESTO?
+        // |
+        // ->Operacion.multiplicar(A,B)
+        String[] comandos = string.split("\\h+");
+        switch (comandos[0].toUpperCase()){
+            case "HELP": //imprime comandos disponibles
+                break;
+            case "NEW":
+                break;
+            case "GET":
+                break;
+            case "GAUSS":
+                break;
+            case "FACTORIZAR":
+                break;
+            case "MULTIPLICAR":
+                break;
+            default:
+                break;
+        }
+        //todo terminar
+        //todo !!!!!!!!!!!!!!
+    }
+
+    public void parseSystem(String string){
         //AtomicInteger columnas = new AtomicInteger(0);
         //se va a dejar de usar, pero lo dejo como nota para terminar implementacion en el futuro
         //se deberia contar el numero de variables con el AtomicInteger
