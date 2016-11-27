@@ -33,6 +33,10 @@ public class Operacion {
         return result;
     }
 
+    public static Matriz producto(Matriz A, Matriz B) {
+        return new Matriz(multiplicacion(A.getMATRIX(),B.getMATRIX()));
+    }
+
     public static double[] matrizvector(double[][] A, double[] v) {
         double[] result = new double[v.length];
             for (int i = 0; i < A.length; i++)

@@ -73,17 +73,21 @@ public class Main {
         //double[][] test = Sustitucion.getIdentidad(4);
         //Factorizacion.imprimirMatriz(test);
         System.out.println("\u001B[33m"+"A ="+"\u001B[0m");
+        //Output.imprimirMatriz(matrixGerry);
         Cola ass = new Cola();
         ass.enqueue(0);
         ass.enqueue(1);
         ass.enqueue(2);
         Matriz matriz = new Matriz(b);
-        //Output.imprimirMatriz(matrixGerry);
+
         //Gauss.elimination(a);
         System.out.println("REALIZANDO ELIMINACION");
         //Gauss.jordan(b);
         //Gauss.jordan(tester);
-        Factorizacion.escalonar(matriz);
+        Input input = new Input("x,y,z,w","3w=1\n12x + 4y + 5z +3w = 13\n3y+3w = 12\nz = 1");
+
+        //Input.parser("12x + 4y + 5z = 13\n3x+3y = 12");
+        //Factorizacion.escalonar(matriz);
 
 
 

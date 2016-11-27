@@ -149,7 +149,8 @@ public class FactorizacionLEGACY {
         System.out.println("\u001B[36m"+"Determinante = "+determinante+"\u001B[0m");
 
         //llama al algoritmo de L
-        L = TriangularInferior.overloadProcessors(pila);
+        //todo esto deja de servir si se descomenta
+        //L = TriangularInferior.overloadProcessors(pila);
 
         //FORMA FINAL
         PALU = new double[][][]{P,A,L,matriz};

@@ -2,8 +2,10 @@ package Gauss;
 
 import Listas.Cola;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 
 import static java.util.Arrays.stream;
 
@@ -34,6 +36,22 @@ public class Output {
                 System.out.println("\u001B[0m"+"][" + solucion[index.incrementAndGet()] + "]");
                 System.out.print("[");
             });
+    }
+
+    public static void imprimirSistema(double[][] matriz, String[] vx, double[] solucion) {
+
+        AtomicInteger index = new AtomicInteger(-1);
+        stream(matriz).forEach(a -> {
+            System.out.print("[");
+            stream(a).forEach(n -> {
+                //System.out.printf("%5.2f ", n);
+                if(n ==1) System.out.printf("\u001B[31m"+"%5.2f ", n);
+                else if(n==0) System.out.printf("\u001B[0m"+"%5.2f ", n);
+                else System.out.printf("\u001B[34m"+"%5.2f ", n);
+            });
+            System.out.print("\u001B[0m"+"][" + vx[index.incrementAndGet()] + "]");
+            System.out.println(" = [" + solucion[index.get()] + "]");
+        });
     }
 
     public static void imprimirMatriz(double[][] m) {
@@ -69,4 +87,10 @@ public class Output {
         });
         System.out.println();
     }
+
+
+
+
+
+
 }
